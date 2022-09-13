@@ -1,0 +1,38 @@
+object DM: TDM
+  OldCreateOrder = False
+  Left = 487
+  Top = 195
+  Height = 388
+  Width = 505
+  object tbEmpresas: TTable
+    Left = 88
+    Top = 32
+  end
+  object tbFornecedores: TTable
+    Left = 168
+    Top = 32
+  end
+  object dsEmpresas: TDataSource
+    DataSet = tbEmpresas
+    Left = 88
+    Top = 96
+  end
+  object dsFornecedores: TDataSource
+    DataSet = tbFornecedores
+    Left = 168
+    Top = 96
+  end
+  object QUERY: TQuery
+    DatabaseName = 'C:\Users\qualvisual18\Documents\Portif'#243'lio\CRUD'
+    DataSource = dsFornecedores
+    Left = 120
+    Top = 192
+    ParamData = <
+      item
+        DataType = ftString
+        Name = 'pNome'
+        ParamType = ptInput
+        Size = 50
+      end>
+  end
+end
