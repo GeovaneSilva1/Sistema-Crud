@@ -81,15 +81,6 @@ begin
        else
           Result := False;
 
-    4: if prTextoEdit = 'Nenhum' then                                           //solução para Cbox
-          begin
-            Result := True;
-            MessageDlg('Escolha Inválida', mtWarning, [mbOK], 0);
-            exit;
-          end
-       else
-          Result := False;
-
     5: if prTextoEdit = '' then                                                 //se o campo for vazio
           begin
             Result := True;
@@ -172,13 +163,13 @@ end;
 
 procedure pCriaTabelaEmpresa;                                                   //tabelaEmpresa
 begin
-  if FileExists('C:\Users\qualvisual18\Documents\Portifólio\CRUD\bd\tbEmpresas.db') And (DM.tbEmpresas.Active) then
+  if FileExists('C:\Users\qualvisual18\Documents\Portfolio\CRUD\bd\tbEmpresas.db') And (DM.tbEmpresas.Active) then
      exit;
 
   DM.tbEmpresas.Active := False;
   DM.tbEmpresas.Close;
 
-  DM.tbEmpresas.DatabaseName := 'C:\Users\qualvisual18\Documents\Portifólio\CRUD\bd\';
+  DM.tbEmpresas.DatabaseName := 'C:\Users\qualvisual18\Documents\Portfolio\CRUD\bd\';
   DM.tbEmpresas.TableName := 'tbEmpresas.db';
   DM.tbEmpresas.TableType := ttParadox;
 
@@ -203,13 +194,13 @@ end;
 
 procedure pCriaTabelaFornecedores;                                              //tabelaFornecedores
 begin
-  if FileExists('C:\Users\qualvisual18\Documents\Portifólio\CRUD\bd\tbFornecedores.db') and (dm.tbFornecedores.Active) then
+  if FileExists('C:\Users\qualvisual18\Documents\Portfolio\CRUD\bd\tbFornecedores.db') and (dm.tbFornecedores.Active) then
      exit;
 
   DM.tbFornecedores.Active := False;
   DM.tbFornecedores.Close;
 
-  DM.tbFornecedores.DatabaseName := 'C:\Users\qualvisual18\Documents\Portifólio\CRUD\bd\';
+  DM.tbFornecedores.DatabaseName := 'C:\Users\qualvisual18\Documents\Portfolio\CRUD\bd\';
   DM.tbFornecedores.TableName := 'tbFornecedores.db';
   DM.tbFornecedores.TableType := ttParadox;
 
@@ -224,7 +215,7 @@ begin
       Add('bdTELEFONE',         ftString,   11, False);
       Add('bdDATANASCIMENTO',   ftString,   10, False); //salva literal
       Add('bdDATAHORACAD',      ftString,   20, False); //salva literal
-      Add('bdDATACAD',          ftString,   20, False); //salva literal
+      Add('bdDATACAD',          ftDate,      0, False); 
     end;
 
   DM.tbFornecedores.IndexDefs.Add('iIDFORNECEDORES','bdIDFORNECEDORES', [ixPrimary, ixUnique]);

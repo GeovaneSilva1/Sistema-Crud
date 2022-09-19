@@ -11,7 +11,6 @@ type
     tbFornecedores: TTable;
     dsEmpresas: TDataSource;
     dsFornecedores: TDataSource;
-    QUERY: TQuery;
   private
     { Private declarations }
   public

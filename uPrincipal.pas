@@ -58,7 +58,7 @@ var
   wFrmFornecedores: TfrmFornecedores;
 begin
   wFrmEmpresas := TfrmEmpresas.Create(Self);
-  wFrmEmpresas.ShowModal;
+  wFrmEmpresas.Show;
   wFrmFornecedores := TfrmFornecedores.Create(Self);
 end;
 
@@ -68,7 +68,7 @@ var
   wFrmFornecedores: TfrmFornecedores;
 begin
   wFrmEmpresas := TfrmEmpresas.Create(Self);
-  wFrmEmpresas.ShowModal;
+  wFrmEmpresas.Show;
   wFrmFornecedores := TfrmFornecedores.Create(Self);
 end;
 
@@ -77,7 +77,7 @@ var
   wFrmFornecedores: TfrmFornecedores;
 begin
   wFrmFornecedores := TfrmFornecedores.Create(Self);
-  wFrmFornecedores.ShowModal;
+  wFrmFornecedores.Show;
 end;
 
 procedure TfrmPrincipal.btMenuFornecedoresClick(Sender: TObject);
@@ -85,7 +85,7 @@ var
   wFrmFornecedores: TfrmFornecedores;
 begin
   wFrmFornecedores := TfrmFornecedores.Create(Self);
-  wFrmFornecedores.ShowModal;
+  wFrmFornecedores.Show;
 end;
 
 procedure TfrmPrincipal.btMenuConsultaFornecedoresClick(Sender: TObject);

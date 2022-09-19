@@ -22,18 +22,4 @@ object DM: TDM
     Left = 176
     Top = 160
   end
-  object QUERY: TQuery
-    DatabaseName = 'C:\Users\qualvisual18\Documents\Portif'#243'lio\CRUD\'
-    Filtered = True
-    DataSource = dsFornecedores
-    Left = 120
-    Top = 224
-    ParamData = <
-      item
-        DataType = ftString
-        Name = 'pNome'
-        ParamType = ptInput
-        Size = 50
-      end>
-  end
 end

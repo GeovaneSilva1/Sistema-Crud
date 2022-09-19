@@ -22454,7 +22454,7 @@ object frmPrincipal: TfrmPrincipal
         OnClick = btMenuEmpresasClick
       end
       object btMenuFornecedores: TMenuItem
-        Caption = 'Forecedores'
+        Caption = 'Fornecedores'
         OnClick = btMenuFornecedoresClick
       end
       object btMenuClientes: TMenuItem

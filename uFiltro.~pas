@@ -44,55 +44,52 @@ uses uConsultFornecedores, uDM, uEmpresas, uFornecedores, uPrincipal,
 procedure TfrmFiltro.rgCpfCnpjClick(Sender: TObject);
 begin
   if rgCpfCnpj.ItemIndex = 0 then
-     edFiltroCpfCnpj.EditMask := '999.999.999-99;1;_'
+     edFiltroCpfCnpj.EditMask := '999.999.999-99;0;_'
   else
-     edFiltroCpfCnpj.EditMask := '99.999.999/9999-99;1;_';
+     edFiltroCpfCnpj.EditMask := '99.999.999/9999-99;0;_';
 
 end;
 
 procedure TfrmFiltro.FormCreate(Sender: TObject);
 begin
-  edFiltroCpfCnpj.EditMask := '999.999.999-99;1;_';
+  edFiltroCpfCnpj.EditMask := '999.999.999-99;0;_';
 end;
 
 procedure TfrmFiltro.btFiltrarClick(Sender: TObject);
 var
-  wRetiraAND: string;
+  wFiltroConsulta: string;
 begin
-
+  wFiltroConsulta := '';
   DM.tbFornecedores.Filtered := false;
   //filtro Nome do fornecedor
   if edFiltroNome.text <> '' then
-     DM.tbFornecedores.Filter := 'bdNOMEFORNECEDORES =' + QuotedStr(edFiltroNome.Text)  + 'AND ';
+     wFiltroConsulta := 'bdNOMEFORNECEDORES = ' + QuotedStr(edFiltroNome.Text) + 'AND ';
 
   //filtro cpf/cnpj
-  if rgCpfCnpj.ItemIndex = 0 then
-     DM.tbFornecedores.Filter := 'bdCPF =' + QuotedStr(edFiltroCpfCnpj.Text)+ 'AND '
-  else
-     DM.tbFornecedores.Filter := 'bdCNPJFORNECEDORES' + QuotedStr(edFiltroCpfCnpj.Text) + 'AND ';
+  if (rgCpfCnpj.ItemIndex = 0) and (edFiltroCpfCnpj.Text <> '') then
+     wFiltroConsulta := wFiltroConsulta + 'bdCPF =' + QuotedStr(edFiltroCpfCnpj.Text) + 'AND '
+  else if (rgCpfCnpj.ItemIndex = 1) and (edFiltroCpfCnpj.Text <> '') then
+     wFiltroConsulta := wFiltroConsulta + 'bdCNPJFORNECEDORES =' + QuotedStr(edFiltroCpfCnpj.Text) + 'AND ';
 
-  //filtro data/hora de cadastro
+  //filtro data de cadastro
+  if (edFiltroDataDe.Text <> '  /  /    ') and (edFiltroDataAte.Text = '  /  /    ') then
+     wFiltroConsulta := wFiltroConsulta + 'bdDATACAD =' + QuotedStr(edFiltroDataDe.Text)   + 'AND ';
+
   if (edFiltroDataDe.Text = '  /  /    ') and (edFiltroDataAte.Text <> '  /  /    ') then
-     DM.tbFornecedores.Filter := 'bdDATAHORACAD <=' + QuotedStr(edFiltroDataAte.Text + ' 23:59:59') + 'AND ';
+     wFiltroConsulta := wFiltroConsulta + 'bdDATACAD <=' + QuotedStr(edFiltroDataAte.Text) + 'AND ';
 
   if (edFiltroDataDe.Text <> '  /  /    ') and (edFiltroDataAte.Text <> '  /  /    ')  then
-     DM.tbFornecedores.Filter := 'bdDATAHORACAD >=' + QuotedStr(edFiltroDataDe.Text + ' 00:00:01') + 'AND '
-                                +'bdDATAHORACAD <='+ QuotedStr(edFiltroDataAte.Text + ' 23:59:59');
+     wFiltroConsulta := wFiltroConsulta + 'bdDATACAD >=' + QuotedStr(edFiltroDataDe.Text)  + 'AND '
+                                        + 'bdDATACAD <=' + QuotedStr(edFiltroDataAte.Text) + 'AND ';
 
   //retirando o AND do final de todo o filtro
-  Copy(DM.tbFornecedores.Filter, )
+  wFiltroConsulta := Copy(wFiltroConsulta, 0, length(wFiltroConsulta)-4);
 
-  Dm.tbFornecedores.Filtered := True;
-
-
-  //DM.tbFornecedores.Locate('bdNOMEFORNECEDORES', edFiltroNome.Text, [loPartialKey]);
-        {
-  DM.QUERY.Close;
-  DM.QUERY.SQL.Clear;
-  DM.QUERY.SQL.Add('select bdNOMEFORNECEDORES from tbFornecedores.db where bdNOMEFORNECEDORES =:pNome');
-  DM.QUERY.ParamByName('pNome').AsString := edFiltroNome.Text;
-  DM.QUERY.Open;
-         }
+  if wFiltroConsulta <> '' then
+     begin
+       DM.tbFornecedores.Filter := wFiltroConsulta;
+       Dm.tbFornecedores.Filtered := True;
+     end;
 
 end;
 

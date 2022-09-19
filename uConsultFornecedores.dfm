@@ -1,6 +1,6 @@
 object frmConsultFornecedores: TfrmConsultFornecedores
-  Left = 254
-  Top = 59
+  Left = 234
+  Top = 43
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Consulta de Fornecedores'
@@ -111,9 +111,11 @@ object frmConsultFornecedores: TfrmConsultFornecedores
       Caption = 'Arquivo'
       object Abrir1: TMenuItem
         Caption = 'Abrir'
+        OnClick = Abrir1Click
       end
-      object Salvar1: TMenuItem
+      object mnSalvar: TMenuItem
         Caption = 'Salvar'
+        OnClick = mnSalvarClick
       end
     end
     object Filtros2: TMenuItem
@@ -123,5 +125,14 @@ object frmConsultFornecedores: TfrmConsultFornecedores
         OnClick = FiltrosAvandos1Click
       end
     end
+  end
+  object sdSalvaArquivotxt: TSaveDialog
+    Filter = 'Arquivo de texto|*.txt'
+    Left = 664
+    Top = 272
+  end
+  object odAbreArquivo: TOpenDialog
+    Left = 744
+    Top = 272
   end
 end

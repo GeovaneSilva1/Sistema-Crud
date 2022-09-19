@@ -112,7 +112,9 @@ object frmEmpresas: TfrmEmpresas
         ParentFont = False
         TabOrder = 1
         Text = 'AC'
+        OnKeyDown = cbUfKeyDown
         OnKeyPress = cbUfKeyPress
+        OnKeyUp = cbUfKeyUp
         Items.Strings = (
           'AC'
           'AL'

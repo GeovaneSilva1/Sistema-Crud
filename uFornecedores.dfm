@@ -14,6 +14,7 @@ object frmFornecedores: TfrmFornecedores
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnActivate = FormActivate
   OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
@@ -173,12 +174,8 @@ object frmFornecedores: TfrmFornecedores
         Height = 19
         Style = csOwnerDrawFixed
         ItemHeight = 13
-        ItemIndex = 0
         TabOrder = 2
-        Text = 'Nenhum'
         OnExit = cbEmpresaExit
-        Items.Strings = (
-          'Nenhum')
       end
       object edRg: TEdit
         Left = 133
@@ -332,7 +329,7 @@ object frmFornecedores: TfrmFornecedores
           Title.Font.Height = -13
           Title.Font.Name = 'Segoe UI'
           Title.Font.Style = []
-          Width = 101
+          Width = 110
           Visible = True
         end>
     end

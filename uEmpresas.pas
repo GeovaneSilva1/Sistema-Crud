@@ -25,6 +25,10 @@ type
     procedure edNomeFantasiaExit(Sender: TObject);
     procedure edCnpjExit(Sender: TObject);
     procedure cbUfKeyPress(Sender: TObject; var Key: Char);
+    procedure cbUfKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cbUfKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -169,6 +173,20 @@ begin
      begin
        Key := #13;
      end
+end;
+
+procedure TfrmEmpresas.cbUfKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = vk_Delete then
+     abort;
+end;
+
+procedure TfrmEmpresas.cbUfKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = vk_Delete then
+     abort;
 end;
 
 end.

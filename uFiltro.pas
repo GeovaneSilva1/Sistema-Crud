@@ -71,17 +71,16 @@ begin
   else if (rgCpfCnpj.ItemIndex = 1) and (edFiltroCpfCnpj.Text <> '') then
      wFiltroConsulta := wFiltroConsulta + 'bdCNPJFORNECEDORES =' + QuotedStr(edFiltroCpfCnpj.Text) + 'AND ';
 
-  //filtro data/hora de cadastro
+  //filtro data de cadastro
   if (edFiltroDataDe.Text <> '  /  /    ') and (edFiltroDataAte.Text = '  /  /    ') then
-     wFiltroConsulta := wFiltroConsulta + 'bdDATAHORACAD >=' + QuotedStr(edFiltroDataDe.Text + ' 00:00:01') + 'AND '
-                                        + 'bdDATAHORACAD <=' + QuotedStr(edFiltroDataDe.Text + ' 23:59:59') + 'AND ';
+     wFiltroConsulta := wFiltroConsulta + 'bdDATACAD =' + QuotedStr(edFiltroDataDe.Text)   + 'AND ';
 
   if (edFiltroDataDe.Text = '  /  /    ') and (edFiltroDataAte.Text <> '  /  /    ') then
-     wFiltroConsulta := wFiltroConsulta + 'bdDATAHORACAD <=' + QuotedStr(edFiltroDataAte.Text + ' 23:59:59') + 'AND ';
+     wFiltroConsulta := wFiltroConsulta + 'bdDATACAD <=' + QuotedStr(edFiltroDataAte.Text) + 'AND ';
 
   if (edFiltroDataDe.Text <> '  /  /    ') and (edFiltroDataAte.Text <> '  /  /    ')  then
-     wFiltroConsulta := wFiltroConsulta + 'bdDATAHORACAD >=' + QuotedStr(edFiltroDataDe.Text + ' 00:00:01') + 'AND '
-                                        + 'bdDATAHORACAD <=' + QuotedStr(edFiltroDataAte.Text + ' 23:59:59') + 'AND ';
+     wFiltroConsulta := wFiltroConsulta + 'bdDATACAD >=' + QuotedStr(edFiltroDataDe.Text)  + 'AND '
+                                        + 'bdDATACAD <=' + QuotedStr(edFiltroDataAte.Text) + 'AND ';
 
   //retirando o AND do final de todo o filtro
   wFiltroConsulta := Copy(wFiltroConsulta, 0, length(wFiltroConsulta)-4);
@@ -91,15 +90,6 @@ begin
        DM.tbFornecedores.Filter := wFiltroConsulta;
        Dm.tbFornecedores.Filtered := True;
      end;
-
-  //DM.tbFornecedores.Locate('bdNOMEFORNECEDORES', edFiltroNome.Text, [loPartialKey]);
-        {
-  DM.QUERY.Close;
-  DM.QUERY.SQL.Clear;
-  DM.QUERY.SQL.Add('select bdNOMEFORNECEDORES from tbFornecedores.db where bdNOMEFORNECEDORES =:pNome');
-  DM.QUERY.ParamByName('pNome').AsString := edFiltroNome.Text;
-  DM.QUERY.Open;
-         }
 
 end;
 

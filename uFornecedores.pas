@@ -43,6 +43,7 @@ type
     procedure edTelefoneExit(Sender: TObject);
     procedure edDtNascimentoExit(Sender: TObject);
     procedure rgCnpjCpfClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -54,13 +55,16 @@ var
 
 implementation
 
-uses uEmpresas, uPrincipal, uProcedimentosPadroes, uDM;
+uses uEmpresas, uPrincipal, uProcedimentosPadroes, uDM,
+  uConsultFornecedores, uFiltro;
 
 {$R *.dfm}
 
 procedure TfrmFornecedores.btSalvarFornecedoresClick(Sender: TObject);
 var
   wTextoCbForn: String;
+
+  wdate: TDate;
 begin
   //inicio da rotina para verificar se a empresa é do PR e se é menor de idade
   if rgCnpjCpf.ItemIndex = 1 then
@@ -76,7 +80,7 @@ begin
                      if strToInt(fVerificaIdade(edDtNascimento.Text, edDtHora.Text)) < 18 then
                         begin
                           MessageDlg('Não é possível fornecedores Menores de Idade Vinculados a empresas do PR.',
-                                     mtError, [mbOK], 0);
+                                     mtWarning, [mbOK], 0);
                           cbEmpresa.SetFocus;
                           exit;
                         end;
@@ -94,11 +98,6 @@ begin
     end;
 
   if fEntradaValoresEmCampos(cbEmpresa.Text, 5) then
-     begin
-       cbEmpresa.SetFocus;
-       exit;
-     end
-  else if fEntradaValoresEmCampos(cbEmpresa.Text, 4) then
      begin
        cbEmpresa.SetFocus;
        exit;
@@ -159,19 +158,30 @@ begin
 
   DM.tbFornecedores.FieldByName('bdEMPRESAS').AsString := cbEmpresa.Text;
 
-  DM.tbFornecedores.FieldByName('bdRG').AsString := edRg.Text;
-
-  DM.tbFornecedores.FieldByName('bdCPF').AsString := edCpf.Text;
-
-  DM.tbFornecedores.FieldByName('bdCNPJFORNECEDORES').AsString := edCnpjFornecedor.Text;
+  if Length(edCnpjFornecedor.Text) = 14 then
+     begin
+       DM.tbFornecedores.FieldByName('bdRG').AsString := 'null';
+       DM.tbFornecedores.FieldByName('bdCPF').AsString := 'null';
+       DM.tbFornecedores.FieldByName('bdDATANASCIMENTO').AsString := 'null';
+       DM.tbFornecedores.FieldByName('bdCNPJFORNECEDORES').AsString := edCnpjFornecedor.Text;
+     end
+  else
+     begin
+       if Length(edCpf.Text) = 11 then
+          begin
+            DM.tbFornecedores.FieldByName('bdCNPJFORNECEDORES').AsString := 'null';
+            DM.tbFornecedores.FieldByName('bdRG').AsString := edRg.Text;
+            DM.tbFornecedores.FieldByName('bdCPF').AsString := edCpf.Text;
+            DM.tbFornecedores.FieldByName('bdDATANASCIMENTO').AsString := edDtNascimento.Text;
+          end;
+     end;
 
   DM.tbFornecedores.FieldByName('bdTELEFONE').AsString := edTelefone.Text;
 
-  DM.tbFornecedores.FieldByName('bdDATANASCIMENTO').AsString := edDtNascimento.Text;
-
   edDtHora.Text := DateTimeToStr(Now);
-  DM.tbFornecedores.FieldByName('bdDATAHORACAD').AsString := edDtHora.Text;     //data/hora para o usuário
-  //DM.tbFornecedores.FieldByName('bdDATACAD').AsString := copy(edDtHora.Text, 0, 10); //data para filtro.
+  DM.tbFornecedores.FieldByName('bdDATAHORACAD').AsString := edDtHora.Text;
+
+  DM.tbFornecedores.FieldByName('bdDATACAD').AsDateTime := strToDate(copy(edDtHora.Text,1, 10));
 
   DM.tbFornecedores.Post;
   MessageDlg('Salvo Com Sucesso', mtInformation, [mbOK], 0);
@@ -180,13 +190,6 @@ end;
 
 procedure TfrmFornecedores.FormShow(Sender: TObject);
 begin
-  DM.tbEmpresas.First;
-  while not DM.tbEmpresas.Eof do
-    begin
-      cbEmpresa.Items.Add(DM.tbEmpresas.FieldByName('bdNOMEFANTASIA').AsString);
-      DM.tbEmpresas.Next;
-    end;
-
   edDtHora.Text := DateTimeToStr(Now);
 
   edCpf.Enabled := False;
@@ -258,7 +261,7 @@ end;
 
 procedure TfrmFornecedores.cbEmpresaExit(Sender: TObject);
 begin
-  if fEntradaValoresEmCampos(cbEmpresa.Text, 4) then
+  if fEntradaValoresEmCampos(cbEmpresa.Text, 5) then
      begin
        cbEmpresa.SetFocus;
        exit;
@@ -410,6 +413,19 @@ begin
        edCnpjFornecedor.Clear;
 
      end;
+end;
+
+procedure TfrmFornecedores.FormActivate(Sender: TObject);
+begin
+  cbEmpresa.Items.Clear;
+
+  DM.tbEmpresas.First;
+  while not DM.tbEmpresas.Eof do
+    begin
+      cbEmpresa.Items.Add(DM.tbEmpresas.FieldByName('bdNOMEFANTASIA').AsString);
+      DM.tbEmpresas.Next;
+    end;
+
 end;
 
 end.
