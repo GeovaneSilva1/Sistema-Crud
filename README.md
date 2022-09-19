@@ -3,3 +3,5 @@
 Algumas regras para cadastro de fornecedores: não é possível cadastrar fornecedores pessoa física (CPF) menor de idade vinculados a empresas do PR. 
 Ao cadastrar cpf, não será possível cadastrar cnpj, e será habilitado os campos para cadastrar rg e data de nascimento.
 
+Banco utilizado: paradox
+
